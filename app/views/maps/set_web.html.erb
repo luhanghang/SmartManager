@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <title>电子地图-设置监控点-<%=@map.name%></title>
+  <%= javascript_include_tag :defaults %>
+  <script type="text/javascript" src="http://api.myemap.com.cn/js/emaps.js"></script>
+
+  <style type="text/css">
+      body {
+          margin: 0;
+          background-color: #333333;
+          color: white;
+          font-size: 12px;
+          overflow: hidden;
+      }
+
+      table {
+          width: 100%;
+          font-size: 12px;
+      }
+
+      #mapObj {
+          background-color: red;
+      }
+
+      img.icon {
+          margin-right: 5px;
+          vertical-align: -2px;
+      }
+
+      #list {
+          overflow-y: auto;
+          overflow-x: hidden;
+          margin-top: 5px;
+      }
+
+      a, a:visited, a:link, a:hover {
+          color: #ffffff;
+          text-decoration: none;
+      }
+
+      div.om-item a, div.om-item a:visited, div.om-item a:link, div.om-item a:hover {
+          color: yellow;
+          text-decoration: none;
+      }
+
+      a:hover {
+          color: #ff0000;
+      }
+  </style>
+  <script type="text/javascript">
+      window.onload = init;
+      var mapDiv,list;
+      var webgis;
+      var s;
+
+      function init() {
+          mapDiv = $("mapObj");
+          list = $("list");
+          adjust_size();
+          window.onresize = adjust_size;
+          init_map();
+          init_spots();
+      }
+
+      function init_map() {
+          webgis = new EMaps("mapObj");
+          webgis.addControl(new ELargeMapControl());
+          webgis.centerAndZoom(new EPoint("<%=@map.city%>"), 8);
+      }
+
+      function init_spots() {
+      <% for mp in @map_spots %>
+          new_spot(<%=mp.spot_id%>, '<%=mp.spot.name%>', new EPoint(<%=mp.x%>,<%=mp.y%>));
+      <% end %>
+      }
+
+      function adjust_size() {
+          var body = document.body ? document.body : document.documentElement;
+          mapDiv.style.width = (body.clientWidth - 200) + "px";
+          mapDiv.style.height = body.clientHeight + "px";
+          list.style.height = (body.clientHeight - 80) + "px";
+      }
+
+      function set_spot(id, name) {
+          clearTimeout(s);
+          var pt = webgis.getCenter();
+          new_spot(id, name, pt);
+          new Ajax.Request('/map_spots/create?spot[map_id]=<%=@map.id%>&spot[spot_id]=' + id + "&spot[x]=" + pt.getLon() + "&spot[y]=" + pt.getLat(), {asynchronous:true, evalScripts:true, method:'post'});
+      }
+
+      function new_spot(id, name, pt) {
+          var infoWindow = new EInfoWindow("", "从地图上移除该监控点");
+          var icon = new EIcon("<div id='smi_" + id + "' style='position:relative;' ondblclick='open_video(" + id + ")'><img src='/assets/monitor_icon.png'><div style='position:absolute;left:0;top:-40px;width:115px;height:50px;color:black;padding:5px;background-image:url(/assets/tips.png);background-repeat:no-repeat'><div style='float:left'>" + name + "</div><div style='float:right'><a href='javascript:remove_spot(" + id + ")' onclick='return confirm(\"确定要从地图上移除该监控点吗?\")'><img src='/assets/trash.png' style='margin-right:15px' width='16' height='16' border='0' title='从地图上移除该监控点'></a></div></div></div>");
+          var marker = new EMarker('marker_' + id, pt, icon);
+          //var mcm = new EContextMenu();
+          //var mcmi1 = new EContextMenuItem("移除");
+          //mcm.addItem(mcmi1);
+          //EEvent.addListener(mcmi1, "select", function(){remove_spot(id);});
+          //marker.contextmenu = mcm;
+          webgis.addOverlay(marker);
+          $("spot_" + id).className = "om-item";
+
+      }
+
+      function find_spot(id) {
+          s = setTimeout(function() {
+              var marker = webgis.getOverlayById('marker_' + id);
+              if (marker) {
+                  webgis.setCenter(marker.pt);
+              }
+          }, 300);
+      }
+
+      function remove_spot(id) {
+          webgis.removeOverlay('marker_' + id);
+          $("spot_" + id).className = "list-item";
+          new Ajax.Request('/map_spots/destroy?spot[map_id]=<%=@map.id%>&spot[spot_id]=' + id, {asynchronous:true, evalScripts:true, method:'post'});
+      }
+
+      function remove_all_spots() {
+          webgis.clearMarkers();
+          var items = document.getElementsByClassName("om-item");
+          for(var i = items.length - 1; i > -1; i--) {
+              items[i].className = "list-item";
+          }
+          new Ajax.Request('/maps/remove_all_spots/<%=@map.id%>', {asynchronous:true, evalScripts:true, method:'post'});
+      }
+
+      function open_video(id) {
+          var smi = getPoint($('smi_' + id));
+          var x = smi.x;
+          var y = smi.y;
+          window.open('/monitor/dialog/' + id, 'monitor', 'top=' + (y + 50) + ',left=' + (x + 20) + ',status=0,toolbar=0,location=0,menubar=0,directories=0,resizable=1,scrollbars=0,height=300,width=400');
+      }
+
+      function getPoint(source)
+      {
+          var pt = {x:0,y:0};
+          do
+          {
+              pt.x += source.offsetLeft;
+              pt.y += source.offsetTop;
+              source = source.offsetParent;
+          }
+          while (source);
+          return pt;
+      }
+  </script>
+</head>
+<body>
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top">
+      <div id="mapObj"></div>
+    </td>
+    <td width="200" valign="top" align="left" style="padding:0">
+      <div style="margin:0;padding:5px;text-align:right;margin-bottom:5px;padding-bottom:5px;border-bottom:1px solid #999999">地图名称:<%=@map.name%></div>
+      <div><img src="/assets/home.png" class="icon">监控点列表</div>
+      <div id="list" style="margin-left:20px">
+        <% for spot in @spots %>
+            <div class="list-item" id="spot_<%= spot.id %>">
+              <img src="/assets/monitor_icon.png" class="icon"><a href="javascript:find_spot(<%= spot.id %>)" ondblclick="set_spot(<%=spot.id%>,'<%=spot.name%>')"><%= spot.name %></a>
+            </div>
+        <% end %>
+      </div>
+      <div style="text-align:center;width:100%;border-top:1px solid #999999">
+        <a href="javascript:remove_all_spots()" onclick="return confirm('确定要移除所有标注吗?')" style="color:white">移除所有标注</a>
+      </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

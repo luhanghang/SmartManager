@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <title>电子地图-<%= @map.name %></title>
+  <%= javascript_include_tag :defaults %>
+  <script type="text/javascript" src="http://api.myemap.com.cn/js/emaps.js"></script>
+
+  <style type="text/css">
+      body {
+          margin: 0;
+          background-color: #333333;
+          color: white;
+          font-size: 12px;
+          overflow: hidden;
+      }
+
+      table {
+          width: 100%;
+          font-size: 12px;
+      }
+
+      #mapObj {
+          background-color: red;
+      }
+
+      img.icon {
+          margin-right: 5px;
+          vertical-align: -2px;
+      }
+
+      #list {
+          overflow-y: auto;
+          overflow-x: hidden;
+          margin-top: 5px;
+      }
+
+      a, a:visited, a:link, a:hover {
+          color: #ffffff;
+          text-decoration: none;
+      }
+
+      div.om-item a, div.om-item a:visited, div.om-item a:link, div.om-item a:hover {
+          color: yellow;
+          text-decoration: none;
+      }
+
+      a:hover {
+          color: #ff0000;
+      }
+  </style>
+  <script type="text/javascript">
+      window.onload = init;
+      var mapDiv,list;
+      var webgis;
+      var s,timer,btTrace;
+
+      function init() {
+          btTrace = $("btTrace");
+          mapDiv = $("mapObj");
+          list = $("list");
+          adjust_size();
+          window.onresize = adjust_size;
+          init_map();
+          init_spots();
+      }
+
+      function init_map() {
+          webgis = new EMaps("mapObj");
+          webgis.addControl(new ELargeMapControl());
+          webgis.centerAndZoom(new EPoint("<%=@map.city%>"), 8);
+      }
+
+      function init_spots() {
+      <% for mp in @map_spots %>
+          new_spot(<%=mp.spot_id%>, '<%=mp.spot.name%>', new EPoint(<%=mp.x%>, <%=mp.y%>));
+      <% end %>
+      }
+
+      function adjust_size() {
+          var body = document.body ? document.body : document.documentElement;
+          mapDiv.style.width = (body.clientWidth - 200) + "px";
+          mapDiv.style.height = body.clientHeight + "px";
+          list.style.height = (body.clientHeight - 85) + "px";
+      }
+
+      function new_spot(id, name, pt) {
+          var icon = new EIcon("<div id='smi_" + id + "' style='position:relative;' ondblclick='open_video(" + id + ")'><img src='/assets/monitor_icon.png'><div style='position:absolute;left:0;top:-40px;width:115px;height:50px;color:black;padding:5px;background-image:url(/assets/tips.png);background-repeat:no-repeat'><div style='float:left'>" + name + "</div></div></div>");
+          var marker = new EMarker('marker_' + id, pt, icon);
+          webgis.addOverlay(marker);
+      }
+
+      function set_spots(list) {
+          for (var i = 0; i < list.length; i++) {
+              var spot = list[i];
+              new_spot(spot.id, spot.name, new EPoint(spot.x, spot.y));
+          }
+      }
+
+      function find_spot(id) {
+          s = setTimeout(function() {
+              var marker = webgis.getOverlayById('marker_' + id);
+              if (marker) {
+                  webgis.setCenter(marker.pt);
+              }
+          }, 300);
+      }
+
+      function open_video(id) {
+          clearTimeout(s);
+          var smi = getPoint($('smi_' + id));
+          var x = smi.x;
+          var y = smi.y;
+          window.open('/monitor/dialog/' + id, 'monitor', 'top=' + (y + 50) + ',left=' + (x + 20) + ',status=0,toolbar=0,location=0,menubar=0,directories=0,resizable=1,scrollbars=0,height=300,width=400');
+      }
+
+      function getPoint(source)
+      {
+          var pt = {x:0,y:0};
+          do
+          {
+              pt.x += source.offsetLeft;
+              pt.y += source.offsetTop;
+              source = source.offsetParent;
+          }
+          while (source);
+          return pt;
+      }
+
+      function toggle_trace() {
+          if (btTrace.value == '开始跟踪') {
+              btTrace.value = '停止跟踪';
+              timer = setInterval("do_trace()", 3000);
+          } else {
+              btTrace.value = '开始跟踪';
+              clearInterval(timer);
+          }
+      }
+
+      function do_trace() {
+          new Ajax.Request('/maps/gps_trace/<%=@map.id%>', {asynchronous:true, evalScripts:true, method:'post'});
+      }
+  </script>
+</head>
+<body>
+<table cellpadding="0" cellspacing="0">
+  <tr>
+    <td valign="top">
+      <div id="mapObj"></div>
+    </td>
+    <td width="200" valign="top" align="left" style="padding:0;">
+      <div style="margin:0;padding:5px;text-align:right;margin-bottom:5px;padding-bottom:5px;border-bottom:1px solid #999999">地图名称:<%= @map.name %></div>
+      <div><img src="/assets/home.png" class="icon">监控点列表</div>
+      <div id="list" style="margin-left:20px">
+        <% for spot in @map_spots %>
+            <div class="list-item" id="spot_<%= spot.spot_id %>">
+              <img src="/assets/monitor_icon.png" class="icon"><a href="javascript:find_spot(<%= spot.spot_id %>)" ondblclick="open_video(<%=spot.spot_id%>)"><%= spot.spot.name %></a>
+            </div>
+        <% end %>
+      </div>
+      <div style="text-align:center;width:100%;border-top:1px solid #999999;padding-top:3px">
+        <input type="button" id="btTrace" value="开始跟踪" onclick="toggle_trace()">
+      </div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

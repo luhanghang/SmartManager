@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+<Dictionary>
+  <Devices description='设备库'>
+    <Device id='1'>
+      <name>
+         VideoJet100 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         MPEG-4视频编码器 
+      </type>
+      <driver>
+         VideoJet100Drv 
+      </driver>
+      <GUID>
+         {1531551A-2E1A-4928-91DD-902CA31BCB3C} 
+      </GUID>
+    </Device>
+    <Device id='2'>
+      <name>
+         H264Encoder 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         h264视频编码器 
+      </type>
+      <driver>
+         H264Driver 
+      </driver>
+      <GUID>
+         {42073209-1FCA-439C-9CDF-080D6E16853F} 
+      </GUID>
+    </Device>
+    <Device id='3'>
+      <name>
+         Bosch Mpeg4 Encoder 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         MPEG-4视频编码器 
+      </type>
+      <driver>
+         RCPPlusDriver 
+      </driver>
+      <GUID>
+         {A52382A5-1B40-4604-AA8C-CA5AEAB3271D} 
+      </GUID>
+    </Device>
+    <Device id='4'>
+      <name>
+         BQ6500VideoServer 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         VideoServer 
+      </type>
+      <driver>
+         6500Drv 
+      </driver>
+      <GUID>
+         {8F5BCC9C-CC48-416A-AC3F-C932579918B8} 
+      </GUID>
+    </Device>
+    <Device id='5'>
+      <name>
+         udp-mobile 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         3G mobile 
+      </type>
+      <driver>
+         udpdriver 
+      </driver>
+      <GUID>
+         {8F5BCC9C-CC48-416A-AC3F-C932579918B8} 
+      </GUID>
+    </Device>
+    <Device id='6'>
+      <name>
+         A3100 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         mobile 
+      </type>
+      <driver>
+         a3100driver 
+      </driver>
+      <GUID>
+         {8F5BCC9C-CC48-416A-AC3F-C932579918B8} 
+      </GUID>
+    </Device>
+    <Device id='7'>
+      <name>
+         H264-2cards 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         H264 
+      </type>
+      <driver>
+         fwroutedrv 
+      </driver>
+      <GUID>
+         12345 
+      </GUID>
+    </Device>
+    <Device id='8'>
+      <name>
+         gwdriver 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         gwdriver 
+      </type>
+      <driver>
+         gwdriver 
+      </driver>
+      <GUID>
+         123456 
+      </GUID>
+    </Device>
+    <Device id='9'>
+      <name>
+         test1 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         test1 
+      </type>
+      <driver>
+         test1 
+      </driver>
+      <GUID>
+        test1
+      </GUID>
+    </Device>
+    <Device id='10'>
+      <name>
+         test2 
+      </name>
+      <vendor>
+         北京中科大洋科技发展股份有限公司 
+      </vendor>
+      <type>
+         test3 
+      </type>
+      <driver>
+         test2 
+      </driver>
+      <GUID>
+         test2 
+      </GUID>
+    </Device>
+  </Devices>
+  <EncodeTypes description='编码类型'>
+    <Item name='mpeg2' id='0'/>
+    <Item name='mpeg4' id='1'/>
+    <Item name='h264' id='2'/>
+    <Item name='x-mpeg4' id='3'/>
+    <Item name='x-h264' id='4'/>
+    <Item name='bosch-mpeg4' id='5'/>
+  </EncodeTypes>
+  <Communications description='通讯模式'>
+    <Item name='udp-单播' id='0'/>
+    <Item name='udp-组播' id='1'/>
+    <Item name='tcp-client' id='2'/>
+    <Item name='tcp-server' id='3'/>
+  </Communications>
+  <ProtocalTypes description='协议类型'>
+    <Item name='协议类型1' id='0'/>
+    <Item name='协议类型2' id='1'/>
+    <Item name='协议类型3' id='2'/>
+  </ProtocalTypes>
+  <PTZProtocals description='云台协议'>
+    <Item name='pelco_p' id='0'/>
+    <Item name='云台协议2' id='1'/>
+    <Item name='云台协议3' id='2'/>
+  </PTZProtocals>
+  <Resolutions description='分辨率'>
+    <Item name='CIF' id='0'/>
+    <Item name='D1' id='1'/>
+    <Item name='2CIF' id='2'/>
+    <Item name='QCIF' id='3'/>
+  </Resolutions>
+  <ConnectType description='连接模式'>
+    <Item name='主动' id='0'/>
+    <Item name='被动' id='1'/>
+  </ConnectType>
+</Dictionary>

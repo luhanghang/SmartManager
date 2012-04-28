@@ -1,0 +1,139 @@
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript">
+	window.onload = init;
+	//window.onresize = resize_monitor;
+	
+	var m, leftNav;
+	var proxy_ip = "192.168.0.10";
+	
+	function init() {
+		window.onunload = function() { player.Stop() };
+		leftNav = document.getElementById("leftNav");
+		resize_monitor();
+		window.onresize = resize_monitor;
+        init_player("192.168.1.30",3050,null);
+	}
+	
+	function init_player(host, port, proxy) {
+		player.username = "admin";
+		player.password = "admin";
+		if(proxy) {
+			player.proxy= "sip:" + proxy;
+		}
+		player.host = "sip:" + host;
+		player.port = port;
+		player.showCaptionBar = true;
+		
+		player.Start();
+	}
+	
+	function resize_monitor() {
+		var h,w;
+		try {
+			h = document.documentElement.clientHeight;
+			w = document.documentElement.clientWidth;
+		} catch(e) {
+			h = document.body.clientHeight;
+			w = document.body.clientWidth;
+		}
+		if(h == 0) h = document.body.clientHeight;
+		if(w == 0) w = document.body.clientWidth;
+		h -= 40;
+		player.height = h;
+		//leftNav.height = h;
+		//leftNav.width = 200;
+		controlPanel.height = h;
+		controlPanel.width = 250;
+		//toolBar.height = 40;
+		toolBar.width = w;
+		//player.width = player.height / 9 * 11;
+		player.width = w - 255;// -170;
+	}
+	
+	function play_video(name, global_id) {
+        var t = global_id.split(":");
+        gloabal_id = t[0] + ":" + t[1] + "3050";
+		player.StartCallEx(name,global_id);
+	}
+	
+	function set_player_mode(mode) {
+		player.SetDisplayMode(mode);
+	}
+</script>
+
+<title>3G Live</title>
+</head>
+
+<body scroll="no" style="margin:0;background-color:#292929">
+	<div width="100%">
+		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+				id="toolBar" width="100%" height="40"
+				codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+				<param name="movie" value="ToolBar.swf?postfix=<%=Time.now.to_i%>" />
+
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="${bgcolor}" />
+				<param name="allowScriptAccess" value="sameDomain" />
+				<embed src="ToolBar.swf?postfix=<%=Time.now.to_i%>" quality="high" bgcolor="${bgcolor}"
+					width="100%" height="40" name="toolBar" align="middle"
+					play="true"
+					loop="false"
+					quality="high"
+					allowScriptAccess="sameDomain"
+					type="application/x-shockwave-flash"
+					pluginspage="http://www.adobe.com/go/getflashplayer">
+				</embed>
+		</object>	
+	</div>
+	<!--
+	<div style="float:left;width:170px;">
+	  	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+				id="leftNav" width="${width}" height="${height}"
+				codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+				<param name="movie" value="FlexMonitorControl.swf" />
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="${bgcolor}" />
+				<param name="allowScriptAccess" value="sameDomain" />
+				<embed src="FlexMonitorControl.swf" quality="high" bgcolor="${bgcolor}"
+					width="${width}" height="${height}" name="FlexMonitorControl" align="middle"
+					play="true"
+					loop="false"
+					quality="high"
+					allowScriptAccess="sameDomain"
+					type="application/x-shockwave-flash"
+					pluginspage="http://www.adobe.com/go/getflashplayer">
+				</embed>
+		</object>
+	</div>
+	-->
+	
+	<div style="float:left;width:250px;background-color:red">
+	  	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+				id="controlPanel" width="${width}" height="${height}"
+				codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+				<param name="movie" value="FlexMonitorClient.swf?postfix<%=Time.now.to_i%>" />
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="${bgcolor}" />
+				<param name="allowScriptAccess" value="sameDomain" />
+				<embed src="FlexMonitorClient.swf?postfix=<%=Time.now.to_i%>" quality="high" bgcolor="${bgcolor}"
+					width="${width}" height="${height}" name="FlexMonitorClients" align="middle"
+					play="true"
+					loop="false"
+					quality="high"
+					allowScriptAccess="sameDomain"
+					type="application/x-shockwave-flash"
+					pluginspage="http://www.adobe.com/go/getflashplayer">
+				</embed>
+		</object>
+	</div>
+	
+	<div id="monitor" style="float:left">
+		<OBJECT name="player" width="200" height="100%" classid=clsid:9C53409F-B8EE-47D2-9EAC-317FDBEB5368></OBJECT>
+	</div>
+	
+</body>
+</html>

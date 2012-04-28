@@ -1,0 +1,1 @@
+xml.Map(:name => @map.name ,:id => @map.id, :parent => @map.parent_id, :thumb => @map.thumb_uri, :img => @map.image_uri,:web => @map.web, :city => @map.city)

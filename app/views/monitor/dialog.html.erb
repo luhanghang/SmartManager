@@ -1,0 +1,19 @@
+<html>
+    <head>
+      <title><%=@spot.name%></title>
+    </head>
+	<body style="margin:0">
+		<OBJECT name="player" width="100%" height="100%" classid=clsid:9C53409F-B8EE-47D2-9EAC-317FDBEB5368></OBJECT>
+	</body>
+</html>
+<script type="text/javascript" defer="true">
+	player.port = <%=@gateway.port%>;
+	player.host = "sip:<%=@gateway.address%>";
+	player.username = "admin";
+	player.password = "admin";
+  player.showToolbar = false;
+  player.showCaptionbar = false;
+  player.Start();
+  player.StartCallEx('<%=@spot.name%>','<%=@spot.url%>');
+	window.onunload = function() { player.Stop() };
+</script>

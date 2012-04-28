@@ -1,0 +1,9 @@
+<title>MAC List</title>
+<div style="font-size:24px;font-weight:bold">
+<% for i in (@n-5..@n-1) %>
+	<div style="text-decoration:line-through"><%=to_addr(i)%></div>
+<% end %>  
+<div style="color:red;margin:10px;margin-left:0;"><%=to_addr(@n)%><a href="mac/next/<%=to_addr(@n+1)%>" style="margin-left:30px">X</a></div>
+<% for i in (@n+1..@n+3) %>
+	<div style="color:#cccccc"><%=to_addr(i)%></div>
+<% end %>  

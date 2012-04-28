@@ -1,0 +1,165 @@
+/* CSS file */
+Application {
+	fontSize: 12;
+	fontWeight: normal;
+	backgroundColor:#292929;
+	color: #999999;
+}
+
+Canvas, HBox, VBox {
+	backgroundAlpha:0;
+}
+
+Tree {
+	backgroundColor: #232323;
+	borderStyle:solid;
+	cornerRadius: 4;
+	borderColor:#333333;
+	backgroundAlpha:1;
+	rowHeight:22;
+	verticalScrollBarStyleName: scrollBar;
+	alternatingItemColors: #232323, #202020;
+	textRollOverColor:#ffffff;
+	textSelectedColor: #ffffff;
+	rollOverColor: #666666;
+	selectionColor: #666666;
+	paddingTop:-1;
+	paddingBottom:0;
+}
+
+ToolTip {
+	fontSize:12;
+}
+
+.scrollBar {
+	trackColors: #666666, #666666;
+	backgroundColor: #333333; 
+	borderColor: #333333;
+	fillAlphas: 0.0, 0.0, 0.0, 0.0;
+}
+
+
+ApplicationControlBar
+{
+	fillAlphas: 0.0, 0.0;
+	highlightAlphas: 0, 0;
+	cornerRadius: 0;
+}
+
+.vmode {
+	borderStyle:solid;
+	borderColor:#cccccc;
+	cornerRadius: 1;
+}
+
+Grid {
+	horizontalGap:-1;
+    verticalGap:-1;
+    borderStyle:none;
+}
+        
+GridItem {
+	borderColor:#cccccc;
+    borderStyle:solid;
+}
+
+TextInput {
+	backgroundAlpha: 0;
+	borderColor:#666666;
+	borderStyle:solid;
+	cornerRadius: 2;
+	backgroundColor: #333333;
+}
+
+ComboBox {
+	backgroundAlpha: 0;
+	borderColor:#666666;
+	borderStyle:solid;
+	cornerRadius: 2;
+	backgroundColor: #333333;
+	dropdownStyleName: comboBoxDropdown;
+}
+.comboBoxDropdown {
+	backgroundAlpha: 0.8;
+	borderColor:#666666;
+	borderStyle:solid;
+	cornerRadius: 2;
+	backgroundColor: #333333;
+}
+
+.frame {
+	paddingTop:25;
+	paddingLeft:10;
+	paddingRight:10;
+	paddingBottom:10;
+	borderColor:#444444;
+	cornerRadius: 1;
+	borderStyle:solid;
+}
+
+.title {
+	borderColor:#666666;
+	cornerRadius: 4;
+	borderStyle:solid;
+	backgroundAlpha: 0;
+}
+
+List {
+	backgroundAlpha:0;
+	borderStyle:none;
+}
+
+Button {
+	color: #999999;
+	borderColor: #666666;
+	fontWeight:normal;
+	fillAlphas: 0.0, 0.0, 0.0, 0.0;
+	highlightAlphas: 0.0, 0.0, 0.0, 0.0;
+	textRollOverColor: #999999;
+	textSelectedColor: #999999;
+	cornerRadius: 2;
+	disabledColor: #333333;
+}
+
+.errorTip {
+	borderColor: haloOrange;
+	fontSize: 12;
+	borderAlpha:0.5;
+	fontWeight:normal;
+}
+
+Alert {
+	backgroundColor:#333333;
+	backgroundAlpha:0.5;
+	color:#5dd7fe;
+	borderColor:#457782;
+	borderAlpha: 0.02;
+	borderThicknessBottom: 0;
+	borderThicknessLeft: 0;
+	borderThicknessRight: 0;
+	borderThicknessTop: 0;
+	paddingBottom:8;
+	titleStyleName: panelTitle;
+	buttonStyleName: "button";
+	dropShadowEnabled:true;
+}
+
+.matchList {
+	backgroundAlpha:0.6;
+	backgroundColor:#333333;
+	borderColor: #666666;
+	borderStyle:solid;
+	verticalScrollBarStyleName: scrollBar;
+	alternatingItemColors: #232323, #202020;
+	textRollOverColor:#ffffff;
+	textSelectedColor: #ffffff;
+	rollOverColor: #666666;
+	selectionColor: #666666;
+	paddingTop: -1;
+}
+
+ComboBox {
+	fontSize:12;
+	fontWeight:normal;
+	verticalScrollBarStyleName: scrollBar;
+}

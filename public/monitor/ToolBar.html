@@ -1,0 +1,128 @@
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="text/javascript">
+	window.onload = init;
+	//window.onresize = resize_monitor;
+	
+	var m, leftNav;
+	var proxy_ip = "192.168.0.10";
+	
+	function init() {
+		player.username = "admin";
+		player.password = "admin";
+		player.host = "sip:192.168.0.30"
+		player.port = 3050;
+		//player.proxy= "sip:" + proxy_ip;
+		player.Start();
+		window.onunload = function() { player.Stop() };
+		leftNav = document.getElementById("leftNav");
+		
+		resize_monitor();
+		window.onresize = resize_monitor;
+	}
+	
+	function resize_monitor() {
+		var h,w;
+		try {
+			h = document.documentElement.clientHeight;
+			w = document.documentElement.clientWidth;
+		} catch(e) {
+			h = document.body.clientHeight;
+			w = document.body.clientWidth;
+		}
+		if(h == 0) h = document.body.clientHeight;
+		if(w == 0) w = document.body.clientWidth;
+		h -= 40;
+		player.height = h;
+		//leftNav.height = h;
+		//leftNav.width = 200;
+		controlPanel.height = h;
+		//controlPanel.width = 200;
+		//toolBar.height = 40;
+		toolBar.width = w;
+		//player.width = player.height / 9 * 11;
+		player.width = w - 200;// -170;
+	}
+	
+	function play_video(name, global_id) {
+		player.StartCallEx(name,global_id);
+	}
+	
+	function set_player_mode(mode) {
+		player.SetDisplayMode(mode);
+	}
+</script>
+
+<title></title>
+</head>
+
+<body scroll="no" style="margin:0">
+	<div width="100%">
+		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+				id="toolBar" width="100%" height="40"
+				codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+				<param name="movie" value="ToolBar.swf" />
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="#869ca7" />
+				<param name="allowScriptAccess" value="sameDomain" />
+				<embed src="ToolBar.swf" quality="high" bgcolor="#869ca7"
+					width="100%" height="40" name="toolBar" align="middle"
+					play="true"
+					loop="false"
+					quality="high"
+					allowScriptAccess="sameDomain"
+					type="application/x-shockwave-flash"
+					pluginspage="http://www.adobe.com/go/getflashplayer">
+				</embed>
+		</object>	
+	</div>
+	<!--
+	<div style="float:left;width:170px;">
+	  	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+				id="leftNav" width="100%" height="100%"
+				codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+				<param name="movie" value="FlexMonitorControl.swf" />
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="#869ca7" />
+				<param name="allowScriptAccess" value="sameDomain" />
+				<embed src="FlexMonitorControl.swf" quality="high" bgcolor="#869ca7"
+					width="100%" height="100%" name="FlexMonitorControl" align="middle"
+					play="true"
+					loop="false"
+					quality="high"
+					allowScriptAccess="sameDomain"
+					type="application/x-shockwave-flash"
+					pluginspage="http://www.adobe.com/go/getflashplayer">
+				</embed>
+		</object>
+	</div>
+	-->
+	<div id="monitor" style="float:left">
+		<OBJECT name="player" width="200" height="100%" classid=clsid:9C53409F-B8EE-47D2-9EAC-317FDBEB5368></OBJECT>
+	</div>
+	
+	<div style="float:left;width:200px">
+	  	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+				id="controlPanel" width="100%" height="100%"
+				codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+				<param name="movie" value="FlexMonitorClient.swf" />
+				<param name="quality" value="high" />
+				<param name="bgcolor" value="#869ca7" />
+				<param name="allowScriptAccess" value="sameDomain" />
+				<embed src="FlexMonitorClient.swf" quality="high" bgcolor="#869ca7"
+					width="100%" height="100%" name="FlexMonitorClients" align="middle"
+					play="true"
+					loop="false"
+					quality="high"
+					allowScriptAccess="sameDomain"
+					type="application/x-shockwave-flash"
+					pluginspage="http://www.adobe.com/go/getflashplayer">
+				</embed>
+		</object>
+	</div>
+	
+</body>
+</html>

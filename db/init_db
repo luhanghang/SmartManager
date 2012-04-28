@@ -1,0 +1,154 @@
+/*
+MySQL Data Transfer
+Source Host: localhost
+Source Database: smartmanager
+Target Host: localhost
+Target Database: smartmanager
+Date: 2009/6/26 16:23:28
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for gateways
+-- ----------------------------
+DROP TABLE IF EXISTS `gateways`;
+CREATE TABLE `gateways` (
+  `id` int(11) NOT NULL auto_increment,
+  `sip_address` varchar(255) collate utf8_unicode_ci default NULL,
+  `name` varchar(255) collate utf8_unicode_ci default NULL,
+  `address` varchar(255) collate utf8_unicode_ci default NULL,
+  `port` int(11) default NULL,
+  `web_port` int(11) default NULL,
+  `server` varchar(255) collate utf8_unicode_ci default NULL,
+  `apptype` varchar(255) collate utf8_unicode_ci default NULL,
+  `driver` varchar(255) collate utf8_unicode_ci default NULL,
+  `protocal` varchar(255) collate utf8_unicode_ci default NULL,
+  `created_at` datetime default NULL,
+  `updated_at` datetime default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for map_spots
+-- ----------------------------
+DROP TABLE IF EXISTS `map_spots`;
+CREATE TABLE `map_spots` (
+  `id` int(11) NOT NULL auto_increment,
+  `spot_id` int(11) default NULL,
+  `map_id` int(11) default NULL,
+  `x` int(11) default NULL,
+  `y` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for maps
+-- ----------------------------
+DROP TABLE IF EXISTS `maps`;
+CREATE TABLE `maps` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(255) collate utf8_unicode_ci default NULL,
+  `parent_id` int(11) default '0',
+  `created_at` datetime default NULL,
+  `updated_at` datetime default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for schema_migrations
+-- ----------------------------
+DROP TABLE IF EXISTS `schema_migrations`;
+CREATE TABLE `schema_migrations` (
+  `version` varchar(255) collate utf8_unicode_ci NOT NULL,
+  UNIQUE KEY `unique_schema_migrations` (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for spot_groups
+-- ----------------------------
+DROP TABLE IF EXISTS `spot_groups`;
+CREATE TABLE `spot_groups` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(255) collate utf8_unicode_ci default NULL,
+  `parent_id` int(11) default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for spots
+-- ----------------------------
+DROP TABLE IF EXISTS `spots`;
+CREATE TABLE `spots` (
+  `id` int(11) NOT NULL auto_increment,
+  `sip_address` varchar(255) collate utf8_unicode_ci default NULL,
+  `name` varchar(255) collate utf8_unicode_ci default NULL,
+  `address` varchar(255) collate utf8_unicode_ci default NULL,
+  `port` int(11) default NULL,
+  `video_in` varchar(255) collate utf8_unicode_ci default NULL,
+  `seq` int(11) default NULL,
+  `ptz_protocal` varchar(255) collate utf8_unicode_ci default NULL,
+  `vendor` varchar(255) collate utf8_unicode_ci default NULL,
+  `driver` varchar(255) collate utf8_unicode_ci default NULL,
+  `device_name` varchar(255) collate utf8_unicode_ci default NULL,
+  `audio_port` int(11) default NULL,
+  `device_type` varchar(255) collate utf8_unicode_ci default NULL,
+  `guid` varchar(255) collate utf8_unicode_ci default NULL,
+  `io_address` int(11) default NULL,
+  `gateway_id` int(11) default NULL,
+  `created_at` datetime default NULL,
+  `updated_at` datetime default NULL,
+  `spot_group_id` int(11) default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for spots_user_groups
+-- ----------------------------
+DROP TABLE IF EXISTS `spots_user_groups`;
+CREATE TABLE `spots_user_groups` (
+  `user_group_id` int(11) default NULL,
+  `spot_id` int(11) default NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for user_groups
+-- ----------------------------
+DROP TABLE IF EXISTS `user_groups`;
+CREATE TABLE `user_groups` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(255) collate utf8_unicode_ci default NULL,
+  `created_at` datetime default NULL,
+  `updated_at` datetime default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL auto_increment,
+  `account` varchar(255) collate utf8_unicode_ci default NULL,
+  `passwd` varchar(255) collate utf8_unicode_ci default NULL,
+  `realname` varchar(255) collate utf8_unicode_ci default NULL,
+  `user_group_id` int(11) default '0',
+  `created_at` datetime default NULL,
+  `updated_at` datetime default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records 
+-- ----------------------------
+INSERT INTO `gateways` VALUES ('1', '475', 'gateway0', '192.168.0.30', '3050', '5050', null, '0', 'JxSIPServer', '0', null, '2009-06-05 06:22:36');
+INSERT INTO `gateways` VALUES ('2', '475', 'gateway1', '192.168.0.30', '3050', '5050', null, '0', 'JxSIPServer', '0', null, null);
+INSERT INTO `gateways` VALUES ('3', '475', 'gateway2', '192.168.0.30', '3050', '5050', null, '0', 'JxSIPServer', '0', null, null);
+INSERT INTO `gateways` VALUES ('4', '475', '网关3', '192.168.0.30', '3050', '5050', null, '0', 'JxSIPServer', '0', null, '2009-06-05 06:23:28');
+INSERT INTO `map_spots` VALUES ('25', '14', '48', '630', '219'), ('26', '7', '48', '541', '287'), ('28', '12', '48', '611', '127'), ('29', '2', '48', '356', '280'), ('30', '25', '48', '270', '163'), ('31', '8', '48', '533', '353'), ('32', '24', '48', '395', '367'), ('33', '3', '48', '602', '131'), ('35', '6', '48', '782', '88'), ('49', '5', '42', '926', '373'), ('50', '12', '42', '531', '411'), ('51', '7', '42', '604', '192'), ('52', '14', '42', '488', '323'), ('53', '8', '46', '614', '288'), ('54', '11', '46', '743', '430'), ('55', '2', '46', '474', '372');
+INSERT INTO `maps` VALUES ('42', '地图4', '0', '2009-06-25 01:20:24', '2009-06-25 02:15:31'), ('46', 'test', '0', '2009-06-25 04:38:04', '2009-06-25 04:47:05'), ('48', 'map', '0', '2009-06-26 06:54:47', '2009-06-26 06:54:47');
+INSERT INTO `schema_migrations` VALUES ('20090604025524'), ('20090604031833'), ('20090604034909'), ('20090604034923'), ('20090615085233');
+INSERT INTO `spot_groups` VALUES ('1', '监控点分组', '0'), ('2', 'group1', '1'), ('15', 'a', '1'), ('16', 'dasfdf', '1'), ('17', 'adsffasd', '16'), ('18', 'afsdf', '17');
+INSERT INTO `spots` VALUES ('1', '475140', '192.168.0.11', '192.168.0.11', '5060', '/DEVICE4/AUDIO1', '4', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', '1', '1', null, '2009-06-11 03:49:09', '16'), ('2', '475141', '192.168.0.101', '192.168.0.101', '5060', '/DEVICE1/AUDIO1', '1', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '1', null, '2009-06-11 03:46:36', '1'), ('3', '475142', '192.168.0.59', '192.168.0.59', '5060', '/DEVICE2/AUDIO1', '2', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '1', null, '2009-06-10 07:27:18', '1'), ('5', '475144', '192.168.0.93', '192.168.0.93', '5060', '/DEVICE5/AUDIO1', '5', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '2', null, null, '1'), ('6', '475145', '192.168.0.110', '192.168.0.110', '5060', '/DEVICE6/AUDIO1', '6', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '2', null, '2009-06-10 07:26:38', '2'), ('7', '475146', '192.168.0.90', '192.168.0.90', '5060', '/DEVICE7/AUDIO1', '7', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '2', null, '2009-06-11 03:46:33', '1'), ('8', '475147', '192.168.0.103', '192.168.0.103', '5060', '/DEVICE8/AUDIO1', '8', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '2', null, '2009-06-11 03:49:21', '1'), ('9', '475148', '192.168.0.91', '192.168.0.91', '5060', '/DEVICE9/AUDIO1', '9', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '3', null, '2009-06-11 03:29:05', '17'), ('10', '475149', '192.168.0.57', '192.168.0.57', '5060', '/DEVICE10/AUDIO1', '10', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '3', null, '2009-06-11 03:31:08', '2'), ('11', '475150', '192.168.0.92', '192.168.0.92', '5060', '/DEVICE11/AUDIO1', '11', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '3', null, '2009-06-11 03:30:09', '1'), ('12', '475151', '192.168.0.98', '192.168.0.98', '5060', '/DEVICE12/AUDIO1', '12', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '3', null, '2009-06-11 03:46:44', '1'), ('13', '475152', '192.168.0.55', '192.168.0.55', '5060', '/DEVICE13/AUDIO1', '13', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '3', null, '2009-06-11 03:44:00', '14'), ('14', '475153', '192.168.0.58', '192.168.0.58', '5060', '/DEVICE14/AUDIO1', '14', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '4', null, '2009-06-10 07:27:18', '1'), ('18', '475157', '192.168.0.108', '192.168.0.108', '5060', '/DEVICE18/AUDIO1', '18', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '4', null, '2009-06-11 03:49:37', '16'), ('19', '475158', '192.168.0.109', '192.168.0.109', '5060', '/DEVICE19/AUDIO1', '19', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '4', null, '2009-06-11 03:27:08', '14'), ('20', '475159', '192.168.0.161', '192.168.0.161', '5060', '/DEVICE20/AUDIO1', '20', 'pelco_p', '', '6500Drv', 'BQ6500VideoServer', '8000', 'VideoServer', '{8F5BCC9C-CC48-416A-AC3F-C932579918B8}', null, '4', null, '2009-06-11 03:29:52', '2'), ('24', 'q', 'q', '1.1.1.1', '1', '/DEVICE1/AUDIO1', '2', '1', '1', '1', '1', '1', '1', null, '1', '1', '2009-06-26 05:16:40', '2009-06-26 05:16:40', '1'), ('25', '2', '22222', '2.2.2.2', '2', '/DEVICE1/AUDIO1', '3', '2', '2', '2', '2', '2', '2', null, '2', '1', '2009-06-26 05:17:32', '2009-06-26 08:08:10', '1');
+INSERT INTO `spots_user_groups` VALUES ('1', '6'), ('1', '1'), ('1', '19'), ('1', '18'), ('3', '20'), ('1', '8'), ('1', '10'), ('1', '13'), ('1', '20');
+INSERT INTO `user_groups` VALUES ('1', '管理员组', null, null), ('3', '普通用户', '2009-06-17 06:48:41', '2009-06-17 06:48:41');
+INSERT INTO `users` VALUES ('1', 'admin', 'admin', 'admin', '1', null, '2009-06-23 01:37:15'), ('2', 'user', '1', 'user', '0', null, '2009-06-17 06:47:04'), ('14', 'luhang', 'luhang', 'luhang', '1', '2009-06-15 04:38:20', '2009-06-16 06:57:08'), ('15', 'jinhua', 'jinhua', 'jinhua', '0', '2009-06-15 04:40:53', '2009-06-16 06:53:35'), ('16', 'yan', 'yan', 'yan', '0', '2009-06-15 04:45:57', '2009-06-17 06:47:04');

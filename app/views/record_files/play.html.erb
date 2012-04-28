@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+  <title><%= @title %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <script type="text/javascript">
+    window.onload = init;
+    function init() {
+        var player = document.getElementById("MMPlayer");
+        player.height = document.documentElement.clientHeight;
+    }
+  </script>
+</head>
+<body>
+
+<object id="MMPlayer" codebase=http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701
+        type=application/x-oleobject height="100%" width="100%" align=absmiddle
+        classid=CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95>
+  <param name="FileName" value="/24.mp4">
+  <param name="ShowControls" value="1">
+  <param name="ShowStatusBar" value="1">
+  <param name="ShowDisplay" value="0">
+  <param name="DefaultFrame" value="Slide">
+  <param name="PlayCount" value="1">
+  <param name="Autostart" value="1">
+
+  <embed src="/24.mp4" width="100%" height="100%" autostart=1 loop=0 align="absmiddle" type="application/x-mplayer2"
+         pluginspage="http://www.microsoft.com/Windows/MediaPlayer/download/default.asp"
+         showcontrols=1 showdisplay=0 showstatusbar=1>
+  </embed>
+</object>
+
+</body>
+</html>
