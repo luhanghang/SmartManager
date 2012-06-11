@@ -1,0 +1,13 @@
+body {
+	background-color: #333;
+	font-size: 12px;
+	margin:0;
+}
+
+#spots {
+	background-color: #222;
+	color:#ccc;
+	width: 300px;
+	float: left;
+	height: 1000px;
+}

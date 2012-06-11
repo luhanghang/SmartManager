@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title></title>
+		<link href="/stylesheets/mapview.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div id="spots">
+			<%
+			if @user_id && @user_id != ''
+				list = SpotGroup.tree_data
+				list.each do |spot|
+			%>
+			<div>
+				<%=spot[:group].name%>
+			</div>
+			<%	
+				end
+			end
+			%>
+		</div>
+	</body>
+</html>
