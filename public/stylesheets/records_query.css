@@ -1,0 +1,75 @@
+body {
+	background-color: #fff;
+	color: #333;
+	font-size: 12px;
+}
+
+form {
+	margin:0;
+	margin-bottom: 10px;
+}
+
+.title {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#main {
+	width: 1250px;
+	margin: 0px auto;
+}
+
+.hours {
+	border-top: 1px solid #ccc;
+	height: 35px;
+	padding-left: 5px;
+}
+
+.hour, .min {
+	padding-top: 2px;
+	float: left;
+	color: #666;
+	height: 20px;
+	font-family:Arial;
+}
+
+.hour {
+	width: 50px;
+	font-weight: bold;
+}
+
+.min {
+	width: 17px;
+	font-size: 9px;
+	border-left: 1px solid #ddd;
+	padding-left: 2px;
+}
+
+#canvas {
+	position: relative;
+}
+
+.time_clip {
+	height: 15px;
+	font-family:Arial;
+	position: absolute;
+	font-size: 9px;
+	color: #fff;
+	padding: 2px;
+	cursor: pointer;
+}
+
+#player {
+	width: 722px;
+	height: 620px;
+	background-color: #000;
+	margin:0 auto;
+	margin-top:50px;
+}
+
+#player_title {
+	font-family:Arial;
+	margin:5px;
+	color:#fff;
+	font-size: 16px;
+}	

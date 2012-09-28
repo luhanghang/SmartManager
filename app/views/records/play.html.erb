@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>录像回放 - <%=@title%></title>
+	<link href="/stylesheets/records_query.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="background-color:#000">
+		<div style="margin:0 auto;width:730px">
+			<div id="player_title">录像回放 - <%=@title%></div>
+			<div id="player_control">
+				<object classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" codebase="http://downloads.videolan.org/pub/videolan/vlc/latest/win32/axvlc.cab" width="720" height="576" events="True" id="vlc" name="vlc">
+					<param name="Src" value="rtsp://<%=@nvr%><%=@pathFile%>" />
+					<param name="ShowDisplay" value="True" />
+					<param name="Loop" value="False" />
+					<param name="AutoPlay" value="True" />
+				</object>
+			</div>
+			<div style="margin-top:20px;color:red;font-size:14px;">
+				提示：如果您看不到录像回放，<a href="/vlc-2.0.3-win32.exe" style="color:pink">请点击此处下载VLC控件安装程序</a>，并采用<span style="color:green">默认</span>安装的方式安装到您的电脑上。
+			</div>
+		</div>
+</body>
+</html>

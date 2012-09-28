@@ -1,0 +1,2 @@
+class AccessDeniedController < ApplicationController
+end

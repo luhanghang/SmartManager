@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>录像查询 - <%=@spot.name%></title>
+	<link href="/stylesheets/records_query.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" rel="stylesheet" href="/stylesheets/dhtmlgoodies_calendar.css" media="screen"></link>
+	<script type="text/javascript" src="/javascripts/prototype.js"></script>
+	<script type="text/javascript" src="/javascripts/dhtmlgoodies_calendar.js"></script>
+	<script type="text/javascript" src="/javascripts/record_query.js"></script>
+</head>
+
+<body>
+	<div id="main">
+	<form id="form" method="post" action="/records/query/<%=@spot.id%>">
+		<span class="title">录像查询 - <%=@spot.name%> </span>
+		<div style="float:right;">
+		请选择查询日期 
+		<input type="text" id="date" value="<%=@date%>" name="date" style="text-align:center;cursor:pointer" size="16" maxlength="16" readonly="true" onclick="displayCalendar(document.forms[0].date,'yyyy-mm-dd',this,false)"/> 
+		<input type="submit" value="查询" style="width:100px;"/>
+		</div>
+	</form>
+	<div id="canvas">
+	<% for hour in 0..23 %>
+		<div class="hours">
+			<div class="hour"><%=hour.to_s.rjust(2,'0')%>:00</div>
+			<% for min in 1..59 %>
+				<div class="min"><%=min.to_s.rjust(2,'0')%></div>
+			<% end %>
+		</div>
+	<% end %>
+	<% @records.each do |record| %>
+		<% 
+		endMin = record['endMin'].to_i
+		if record['endHour'] != record['startHour']
+			endMin = 60
+		end
+		startHour = record['startHour'].to_i
+		startMin = record['startMin'].to_i
+		endHour = record['endHour'].to_i;
+		top = startHour * 36 + 18;
+		width = (endMin - startMin) * 20 - 2
+		left = startMin * 20 + 35
+		if endMin == 60
+			endHour = startHour + 1
+			endMin = '00'
+		end
+		%>
+		<div class="time_clip" style="width:<%=width%>px;top:<%=top%>px;left:<%=left%>px;background-color:rgb(<%=rand(128)%>,<%=rand(128)%>,<%=rand(128)%>)" onclick="var play = window.open('/records/play?title=<%=startHour.to_s.rjust(2,'0')%>:<%=startMin.to_s.rjust(2,'0')%> - <%=endHour.to_s.rjust(2,'0')%>:<%=endMin.to_s.rjust(2,'0')%>&nvr=<%=@nvr%>&pathFile=<%=record['pathFile']%>')">
+			<%=startHour.to_s.rjust(2,'0')%>:<%=startMin.to_s.rjust(2,'0')%> - <%=endHour.to_s.rjust(2,'0')%>:<%=endMin.to_s.rjust(2,'0')%>
+		</div>
+		<%
+		if record['endHour'] != record['startHour'] and record['endMin'].to_i != 0
+			endMin = record['endMin'].to_i 
+			endHour = record['endHour'].to_i
+			startMin = 0
+			startHour = endHour
+			top = startHour * 36 + 18;
+			width = (endMin - startMin) * 20 - 2
+			left = startMin * 20 + 35
+		%>
+		<div class="time_clip" style="width:<%=width%>px;top:<%=top%>px;left:<%=left%>px;background-color:rgb(<%=rand(128)%>,<%=rand(128)%>,<%=rand(128)%>)" onclick="var play = window.open('/records/play?title=<%=startHour.to_s.rjust(2,'0')%>:<%=startMin.to_s.rjust(2,'0')%> - <%=endHour.to_s.rjust(2,'0')%>:<%=endMin.to_s.rjust(2,'0')%>&nvr=<%=@nvr%>&pathFile=<%=record['pathFile']%>')">
+			<%=startHour.to_s.rjust(2,'0')%>:<%=startMin.to_s.rjust(2,'0')%> - <%=endHour.to_s.rjust(2,'0')%>:<%=endMin.to_s.rjust(2,'0')%>
+		</div>
+		<% end %>
+	<% end %>
+	</div>
+	</div>
+</body>
+</html>
