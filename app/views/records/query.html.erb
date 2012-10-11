@@ -30,40 +30,38 @@
 			<% end %>
 		</div>
 	<% end %>
-	<% @records.each do |record| %>
-		<% 
-		endMin = record['endMin'].to_i
-		if record['endHour'] != record['startHour']
-			endMin = 60
-		end
+	<% @records.each do |record|
 		startHour = record['startHour'].to_i
 		startMin = record['startMin'].to_i
-		endHour = record['endHour'].to_i;
-		top = startHour * 36 + 18;
-		width = (endMin - startMin) * 20 - 2
-		left = startMin * 20 + 35
-		if endMin == 60
-			endHour = startHour + 1
-			endMin = '00'
-		end
+		endHour = record['endHour'].to_i
+		endMin = record['endMin'].to_i
+		startMin1 = startMin
+		midHour = startHour
+		
+		while midHour <= endHour
+			endMin1 = endMin
+			endMin2 = endMin
+			endHour2 = midHour
+			if midHour < endHour
+				endMin1 = 60
+				endMin2 = 0		
+				endHour2 = midHour + 1
+			end
+			width = (endMin1 - startMin1) * 20 - 2
+			if width > 0
+				top = midHour * 36 + 18
+				left = startMin1 * 20 + 35	
+				title = "#{midHour.to_s.rjust(2,'0')}:#{startMin1.to_s.rjust(2,'0')}-#{endHour2.to_s.rjust(2,'0')}:#{endMin2.to_s.rjust(2,'0')}"
 		%>
-		<div class="time_clip" style="width:<%=width%>px;top:<%=top%>px;left:<%=left%>px;background-color:rgb(<%=rand(128)%>,<%=rand(128)%>,<%=rand(128)%>)" onclick="var play = window.open('/records/play?title=<%=startHour.to_s.rjust(2,'0')%>:<%=startMin.to_s.rjust(2,'0')%> - <%=endHour.to_s.rjust(2,'0')%>:<%=endMin.to_s.rjust(2,'0')%>&nvr=<%=@nvr%>&pathFile=<%=record['pathFile']%>')">
-			<%=startHour.to_s.rjust(2,'0')%>:<%=startMin.to_s.rjust(2,'0')%> - <%=endHour.to_s.rjust(2,'0')%>:<%=endMin.to_s.rjust(2,'0')%>
+		<div class="time_clip" style="width:<%=width%>px;top:<%=top%>px;left:<%=left%>px;background-color:rgb(<%=rand(128)%>,<%=rand(128)%>,<%=rand(128)%>)" onclick="var play = window.open('/records/play?title=<%=@date%> <%=title%>&nvr=<%=@nvr%>&pathFile=<%=record['pathFile']%>')" title="<%=title%>">
+			<%=title%>
 		</div>
 		<%
-		if record['endHour'] != record['startHour'] and record['endMin'].to_i != 0
-			endMin = record['endMin'].to_i 
-			endHour = record['endHour'].to_i
-			startMin = 0
-			startHour = endHour
-			top = startHour * 36 + 18;
-			width = (endMin - startMin) * 20 - 2
-			left = startMin * 20 + 35
+			end
+			startMin1 = 0
+			midHour += 1
+		end
 		%>
-		<div class="time_clip" style="width:<%=width%>px;top:<%=top%>px;left:<%=left%>px;background-color:rgb(<%=rand(128)%>,<%=rand(128)%>,<%=rand(128)%>)" onclick="var play = window.open('/records/play?title=<%=startHour.to_s.rjust(2,'0')%>:<%=startMin.to_s.rjust(2,'0')%> - <%=endHour.to_s.rjust(2,'0')%>:<%=endMin.to_s.rjust(2,'0')%>&nvr=<%=@nvr%>&pathFile=<%=record['pathFile']%>')">
-			<%=startHour.to_s.rjust(2,'0')%>:<%=startMin.to_s.rjust(2,'0')%> - <%=endHour.to_s.rjust(2,'0')%>:<%=endMin.to_s.rjust(2,'0')%>
-		</div>
-		<% end %>
 	<% end %>
 	</div>
 	</div>

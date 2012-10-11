@@ -16,10 +16,17 @@
 					<param name="ShowDisplay" value="True" />
 					<param name="Loop" value="False" />
 					<param name="AutoPlay" value="True" />
+					<embed autostart="true" type="application/x-vlc-plugin" pluginspage="http://www.videolan.org"
+version="VideoLAN.VLCPlugin.2" width="720" height="576" id="vlc" target="rtsp://<%=@nvr%><%=@pathFile%>">
+</embed>
 				</object>
 			</div>
 			<div style="margin-top:20px;color:red;font-size:14px;">
 				提示：如果您看不到录像回放，<a href="/vlc-2.0.3-win32.exe" style="color:pink">请点击此处下载VLC控件安装程序</a>，并采用<span style="color:green">默认</span>安装的方式安装到您的电脑上。
+			</div>
+			
+			<div style="margin-top:20px;">
+				<a href="http://<%=@nvr%>:7475/record_files/download?file=<%=@pathFile%>&filename=<%=@title%>.ts" style="color:#fff;font-size:14px;">您也可以点击此处下载该录像文件保存到您的电脑并使用VLC或暴风影音等播放器进行播放</a>
 			</div>
 		</div>
 </body>

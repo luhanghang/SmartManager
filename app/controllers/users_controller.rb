@@ -65,6 +65,32 @@ class UsersController < ApplicationController
     Log.log(session[:user], "修改密码: #{user.account}")
     render :text => ""
   end
+  
+  def do_change_passwd
+    new_pass = params[:passwd]
+    match = params[:passwd1]
+    if new_pass != match
+    	render :update do |page|
+	    	page.replace_html 'message', :text => "两次输入的密码不匹配"
+	    end
+	    return
+    end
+    
+    if new_pass == nil or new_pass.strip == ''
+    	render :update do |page|
+	    	page.replace_html 'message', :text => "密码不能为空"
+	    end
+	    return
+    end
+    
+    user = User.find(session[:user])
+    user.passwd = new_pass
+    user.save
+    Log.log(session[:user], "修改密码: #{user.account}")
+    render :update do |page|
+      page.replace_html 'message', :text => "密码修改成功"
+    end
+  end
 
   def check_sign_in
     user_id = session[:user]
