@@ -1,3 +1,5 @@
+require 'httpclient'
+
 class SpotsController < ApplicationController
   def states
   	states = []
@@ -73,6 +75,15 @@ class SpotsController < ApplicationController
   def names
     @gateways = Gateway.find(:all)
     render :action => :all
+  end
+  
+  def get_gis
+  	id = params[:id]
+  	host = params[:host]
+  	gw = Gateway.find(:first, :conditions => "address = '#{host}' or l_address = '#{host}'");
+  	client = HTTPClient.new
+    gis = client.get_content('http://' << host << ':' << gw.port.to_s << '/gis/get?id=' << id)
+    render :text => gis
   end
   
   def get_inf
