@@ -16,6 +16,9 @@
 	<form id="form" method="post" action="/records/query/<%=@spot.id%>">
 		<span class="title">录像查询 - <%=@spot.name%> </span>
 		<div style="float:right;">
+		<% if @role == 'su' %>
+			<input type="button" value="删除该监控点的全部录像文件" style="margin-right:10px" onclick="remove_record_files(<%=@spot.id%>)"/>
+		<%	end %>
 		请选择查询日期 
 		<input type="text" id="date" value="<%=@date%>" name="date" style="text-align:center;cursor:pointer" size="16" maxlength="16" readonly="true" onclick="displayCalendar(document.forms[0].date,'yyyy-mm-dd',this,false)"/> 
 		<input type="submit" value="查询" style="width:100px;"/>

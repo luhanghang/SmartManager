@@ -15,3 +15,9 @@ function play(nvr,pathFile) {
 		showPlayer();
 	}
 }
+
+function remove_record_files(spot_id) {
+	if(confirm("确定要删除该监控点的所有录像文件吗？")) {
+		new Ajax.Request("/records/remove/" + spot_id, {asynchronous:false, evalScripts:true});
+	}
+}

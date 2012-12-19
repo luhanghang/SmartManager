@@ -1,3 +1,5 @@
+require 'httpclient'
+
 class RecordsController < ApplicationController
   def query 
   	unless session[:user]
@@ -15,6 +17,7 @@ class RecordsController < ApplicationController
   		return
   	end	
   	
+  	@role = session[:role]
   	spots = []
   	c_id = session[:company]
     c_id = nil if c_id == ''
@@ -23,7 +26,7 @@ class RecordsController < ApplicationController
   	  cs = Company.find_by_is_public(1)
   	  @group = c.spot_groups.find_by_parent_id(1)
   	  @gs = cs.spot_groups.find_by_parent_id(1) if cs
-  	  if session[:role] == 'admin'
+  	  if @role == 'admin'
   	  	if cs
   	  		spots = c.spots + cs.spots
   	  	else
@@ -57,5 +60,18 @@ class RecordsController < ApplicationController
   	@title = params[:title]
   	@nvr = params[:nvr]
   	@pathFile = params[:pathFile]
+  end
+  
+  def remove
+  	render :update do |page|
+  		if session[:role] == 'su'
+  			spot = Spot.find(params[:id])
+  			gateway = spot.encoder.gateway
+		  	client = HTTPClient.new
+		    nvr = client.get_content('http://' << gateway.l_address << ':' << gateway.port.to_s << '/record_conf/read')
+		    client.get_content('http://' << nvr << '/record_files/remove/' << spot.global_id << '?remote_ip=' << gateway.l_address)
+  		end
+  		page.call 'alert', "删除任务已提交至删除队列，系统将自动进行删除"
+    end
   end
 end
