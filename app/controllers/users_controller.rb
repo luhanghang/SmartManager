@@ -44,6 +44,18 @@ class UsersController < ApplicationController
     end
     render :text => "#{user.role.alias}:#{user.privileges}:#{company}-#{user.user_group.name}-#{user.realname}(#{user.account}):#{user.id}:#{logo}"
   end
+  
+  def sign_in_mobile
+    user = User.find_by_account_and_passwd(params[:account], params[:passwd])
+    if user == nil
+      render :text => "NOLOGIN"
+      return
+    end
+    
+    Log.log(user.id, "手机登录: #{user.account}")
+    render :text => "success:#{user.id}"
+  end
+
 
   def sign_out
     user_id = session[:user]

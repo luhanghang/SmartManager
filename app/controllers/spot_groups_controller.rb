@@ -56,7 +56,7 @@ class SpotGroupsController < ApplicationController
       end
     else
       @group = SpotGroup.find(:first)
-      @spots = Spot.find(:all);
+      @spots = Spot.find(:all,:order=>"name")
     end
     @local = params[:local]
     @local = "0" if @local.blank?

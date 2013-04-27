@@ -3,7 +3,7 @@ class Company < ActiveRecord::Base
   has_many :user_groups, :dependent => :destroy
   has_and_belongs_to_many :gateways
   has_many :companies_gateways#, :dependent => :destroy
-  has_many :spots
+  has_many :spots,:order => :name
   has_many :spot_groups, :dependent => :destroy
   has_many :encoders
   has_many :logs

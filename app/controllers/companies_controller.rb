@@ -30,6 +30,10 @@ class CompaniesController < ApplicationController
       c = Company.find(id)
       c.update_attributes(params[:company])
       c.save
+      sg = c.spot_groups.find_by_parent_id(1)
+      sg.name = c.name
+      sg.alias = c.name
+      sg.save
       Log.log(session[:user]||params[:user_id], "修改公司信息: #{c.name}")
     else
       c = Company.new(params[:company])

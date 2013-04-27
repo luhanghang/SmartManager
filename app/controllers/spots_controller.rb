@@ -89,6 +89,68 @@ class SpotsController < ApplicationController
   def get_inf
   	@spot = Spot.find(params[:id])
   end
+  
+  def mobile_get
+  	spot = Spot.find(params[:id])
+  	render :text => "#{spot.global_id}:#{spot.encoder.gateway.address}"
+  end
+  
+  def mobile_list 
+  	user = User.find(params[:id])
+    role = user.role.alias
+    c_id = user.company_id
+    c_id = nil if c_id == ''
+    if c_id
+  	  c = Company.find(c_id)
+  	  cs = Company.find_by_is_public(1)
+  	  if role == 'admin'
+  	  	if cs
+  	  		spots = c.spots + cs.spots
+  	  	else
+			spots = c.spots
+  	  	end
+  	  else
+  	  	spots = user.user_group.spots
+      end
+    else 
+    	spots = Spot.find(:all,:order=>"name")
+    end
+    return spots
+  end
+  
+  def mobile_list_all
+  	spots = self.mobile_list() 
+    list = "" 
+    online = []
+    Gateway.all.each do |g|
+  		g.spot_states.each do |ss|
+  			s = g.spots.find_by_global_id(ss.spot)
+  			if spots.include?(s)
+  				list << "#{s.id}~#{s.name}~1`" 
+  				online << s.id 
+  			end
+  		end
+  	end
+    spots.each do |s|
+    	unless online.include?(s.id)
+    		list << "#{s.id}~#{s.name}~0`"
+    	end	
+    end
+    render :text => list
+  end
+  
+  def mobile_list_online
+  	spots = self.mobile_list()
+  	states = SpotState.find(:all) 
+    list = "" 
+    Gateway.all.each do |g|
+  		g.spot_states.each do |ss|
+  			s = g.spots.find_by_global_id(ss.spot)
+  			list << "#{s.id}~#{s.name}~1`" if spots.include?(s) 
+  		end
+  	end
+    render :text => list
+  end
 
   def change_parent
     spot = Spot.find(params[:id])
