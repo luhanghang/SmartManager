@@ -7,7 +7,7 @@ xml.Users do
     group = user.user_group
     g = ""
     g = group.name if group
-    c = "联通"
+    c = "总部"
     c = company.name if company
     unless @company && (!company || company.id != @company)
 	if Time.now - u.lasttime < 30

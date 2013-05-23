@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     lu.lasttime = lu.logintime
     lu.save
     Log.log(session[:user], "用户登录: #{user.account}")
-    company = "联通"
+    company = "总部"
     logo = Company::DEFAULT_LOGO
     if user.company
     	company = user.company.name
@@ -129,7 +129,7 @@ class UsersController < ApplicationController
 
     user = User.find(user_id)
     Log.log(session[:user], "用户登录: #{user.account}")
-    company = "联通"
+    company = "总部"
     logo = Company::DEFAULT_LOGO
     if user.company
     	company = user.company.name

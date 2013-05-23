@@ -2,7 +2,7 @@ xml.instruct!
 
 xml.Encoders({:name => "编码器"}) do
   if @encoders
-    xml.Company(:name => "联通", :id => "") do
+    xml.Company(:name => "总部", :id => "") do
       @encoders.each do |encoder|
         xml.Encoder({:name => encoder.name, :id => encoder.id}, :port => encoder.service_port) do
           encoder.spots.each do |spot|

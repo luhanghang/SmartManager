@@ -21,7 +21,7 @@ class EncodersController < ApplicationController
     if company
       c_name = company.name
     else
-      c_name = "联通"
+      c_name = "总部"
     end
     Log.log(session[:user], "将编码器: #{encoder.name}分配给公司:#{c_name}")
     render :text => 'ok'

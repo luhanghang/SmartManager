@@ -92,7 +92,10 @@ class SpotsController < ApplicationController
   
   def mobile_get
   	spot = Spot.find(params[:id])
-  	render :text => "#{spot.global_id}:#{spot.encoder.gateway.address}"
+  	encoder = spot.encoder
+  	ts_mode = 1
+  	ts_mode = 0 if encoder.device == 5
+  	render :text => "#{spot.global_id}:#{spot.encoder.gateway.address}:#{ts_mode}"
   end
   
   def mobile_list 
